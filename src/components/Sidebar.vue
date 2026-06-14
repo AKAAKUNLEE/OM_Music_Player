@@ -12,7 +12,7 @@
           v-for="item in categories" 
           :key="item.id"
           :class="{ active: activeNav === item.id }"
-          @click="activeNav = item.id"
+          @click="handleNavClick(item.id)"
         >
           <span class="nav-icon">{{ item.icon }}</span>
           <span class="nav-name">{{ item.name }}</span>
@@ -61,6 +61,8 @@ import { categories } from '../utils/demoData';
 import { open } from '@tauri-apps/plugin-dialog';
 import { convertFileSrc } from '@tauri-apps/api/core';
 
+const emit = defineEmits(['navigate']);
+
 const { 
   playlist, 
   currentIndex, 
@@ -71,7 +73,12 @@ const {
 } = useMusicStore();
 
 const activeNav = ref('recommend');
-const playlistContainer = ref<HTMLElement | null>(null);
+const playlistContainer = ref(null);
+
+function handleNavClick(navId) {
+  activeNav.value = navId;
+  emit('navigate', navId);
+}
 
 async function selectMusicFiles() {
   const selected = await open({

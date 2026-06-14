@@ -1,21 +1,44 @@
 <template>
   <div class="app-container" :class="{ 'dark': isDarkMode }">
-    <Sidebar />
-    <MainContent />
+    <Sidebar @navigate="handleNavigate" />
+    <main class="main-content-wrapper">
+      <transition name="fade" mode="out-in">
+        <component :is="currentPage" :key="currentPageName" />
+      </transition>
+    </main>
     <LyricsPanel />
     <PlayerBar />
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
+import { ref, markRaw, onMounted } from 'vue';
 import Sidebar from './components/Sidebar.vue';
-import MainContent from './components/MainContent.vue';
 import PlayerBar from './components/PlayerBar.vue';
 import LyricsPanel from './components/LyricsPanel.vue';
+import RecommendPage from './views/RecommendPage.vue';
+import SonglistPage from './views/SonglistPage.vue';
+import RadioPage from './views/RadioPage.vue';
+import MyPage from './views/MyPage.vue';
 import { useMusicStore } from './stores/musicStore';
 
 const { isDarkMode, addSongs } = useMusicStore();
+
+const currentPageName = ref('recommend');
+
+const pages = {
+  recommend: markRaw(RecommendPage),
+  songlist: markRaw(SonglistPage),
+  radio: markRaw(RadioPage),
+  my: markRaw(MyPage)
+};
+
+const currentPage = ref(pages.recommend);
+
+function handleNavigate(pageName) {
+  currentPageName.value = pageName;
+  currentPage.value = pages[pageName] || pages.recommend;
+}
 
 onMounted(() => {
   const savedDarkMode = localStorage.getItem('darkMode');
@@ -49,6 +72,22 @@ html, body {
 
 .app-container.dark {
   background: #121212;
+}
+
+.main-content-wrapper {
+  margin-left: 240px;
+  min-height: 100vh;
+  padding-bottom: 70px;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 
 ::-webkit-scrollbar {
