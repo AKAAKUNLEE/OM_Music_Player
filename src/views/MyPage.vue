@@ -1,12 +1,12 @@
 <template>
   <div class="page my-page" :class="{ 'dark': isDarkMode }">
     <div class="user-header">
-      <div class="user-avatar">👤</div>
+      <div class="user-avatar">{{ userProfile.avatar }}</div>
       <div class="user-info">
-        <h2 class="user-name">OM Music 用户</h2>
-        <p class="user-desc">音乐爱好者</p>
+        <h2 class="user-name">{{ userProfile.nickname }}</h2>
+        <p class="user-desc">{{ userProfile.signature }}</p>
       </div>
-      <button class="btn-edit">编辑资料</button>
+      <button class="btn-edit" @click="openAccountSettings">编辑资料</button>
     </div>
 
     <div class="content-area">
@@ -16,7 +16,7 @@
           <div class="stat-label">收藏歌曲</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ 12 }}</div>
+          <div class="stat-value">{{ myPlaylists.length }}</div>
           <div class="stat-label">创建歌单</div>
         </div>
         <div class="stat-item">
@@ -32,7 +32,7 @@
       <div class="section">
         <div class="section-header">
           <h3 class="section-title">🎵 我的收藏</h3>
-          <button class="btn-manage">管理</button>
+          <button class="btn-manage" @click="manageFavorites">管理</button>
         </div>
         <div class="song-list">
           <div 
@@ -60,7 +60,7 @@
       <div class="section">
         <div class="section-header">
           <h3 class="section-title">📋 创建的歌单</h3>
-          <button class="btn-create">+ 创建歌单</button>
+          <button class="btn-create" @click="createNewPlaylist">+ 创建歌单</button>
         </div>
         <div class="playlist-list">
           <div 
@@ -110,22 +110,22 @@
             <span class="setting-name">主题模式</span>
             <span class="setting-value">{{ isDarkMode ? '深色' : '浅色' }}</span>
           </div>
-          <div class="setting-item">
+          <div class="setting-item" @click="openAudioSettings">
             <span class="setting-icon">🔊</span>
             <span class="setting-name">音效设置</span>
             <span class="setting-arrow">→</span>
           </div>
-          <div class="setting-item">
+          <div class="setting-item" @click="openLocalMusicSettings">
             <span class="setting-icon">📁</span>
             <span class="setting-name">本地音乐</span>
             <span class="setting-arrow">→</span>
           </div>
-          <div class="setting-item">
+          <div class="setting-item" @click="openAccountSettings">
             <span class="setting-icon">👤</span>
             <span class="setting-name">账号管理</span>
             <span class="setting-arrow">→</span>
           </div>
-          <div class="setting-item">
+          <div class="setting-item" @click="openAboutSettings">
             <span class="setting-icon">ℹ️</span>
             <span class="setting-name">关于我们</span>
             <span class="setting-arrow">→</span>
@@ -133,16 +133,49 @@
         </div>
       </div>
     </div>
+
+    <!-- 设置弹窗 -->
+    <Modal v-if="activeModal" :title="modalTitle" @close="closeModal">
+      <AudioSettings v-if="activeModal === 'audio'" @close="closeModal" />
+      <LocalMusicSettings v-if="activeModal === 'local'" @close="closeModal" />
+      <AccountSettings v-if="activeModal === 'account'" @close="closeModal" />
+      <AboutSettings v-if="activeModal === 'about'" @close="closeModal" />
+    </Modal>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
 import { formatDuration } from '../utils/format';
 import { demoPlaylist } from '../utils/demoData';
+import Modal from '../components/Modal.vue';
+import AudioSettings from '../components/AudioSettings.vue';
+import LocalMusicSettings from '../components/LocalMusicSettings.vue';
+import AccountSettings from '../components/AccountSettings.vue';
+import AboutSettings from '../components/AboutSettings.vue';
 
 const { playlist, currentIndex, isDarkMode, toggleDarkMode, playSong } = useMusicStore();
+
+const activeModal = ref(null);
+
+const modalTitle = computed(() => {
+  const titles = {
+    audio: '音效设置',
+    local: '本地音乐',
+    account: '账号管理',
+    about: '关于我们'
+  };
+  return titles[activeModal.value] || '';
+});
+
+// 加载用户资料
+const savedProfile = localStorage.getItem('userProfile');
+const userProfile = ref(savedProfile ? JSON.parse(savedProfile) : {
+  avatar: '👤',
+  nickname: 'OM Music 用户',
+  signature: '音乐爱好者'
+});
 
 const myPlaylists = ref([
   {
@@ -166,11 +199,11 @@ const myPlaylists = ref([
 ]);
 
 const recentSongs = ref([
-  { id: demoPlaylist[0].id, name: demoPlaylist[0].name, artist: demoPlaylist[0].artist, lastPlayed: '刚刚' },
-  { id: demoPlaylist[1].id, name: demoPlaylist[1].name, artist: demoPlaylist[1].artist, lastPlayed: '10分钟前' },
-  { id: demoPlaylist[2].id, name: demoPlaylist[2].name, artist: demoPlaylist[2].artist, lastPlayed: '1小时前' },
-  { id: demoPlaylist[3].id, name: demoPlaylist[3].name, artist: demoPlaylist[3].artist, lastPlayed: '昨天' },
-  { id: demoPlaylist[4].id, name: demoPlaylist[4].name, artist: demoPlaylist[4].artist, lastPlayed: '2天前' }
+  { id: demoPlaylist[0]?.id, name: demoPlaylist[0]?.name, artist: demoPlaylist[0]?.artist, lastPlayed: '刚刚' },
+  { id: demoPlaylist[1]?.id, name: demoPlaylist[1]?.name, artist: demoPlaylist[1]?.artist, lastPlayed: '10分钟前' },
+  { id: demoPlaylist[2]?.id, name: demoPlaylist[2]?.name, artist: demoPlaylist[2]?.artist, lastPlayed: '1小时前' },
+  { id: demoPlaylist[3]?.id, name: demoPlaylist[3]?.name, artist: demoPlaylist[3]?.artist, lastPlayed: '昨天' },
+  { id: demoPlaylist[4]?.id, name: demoPlaylist[4]?.name, artist: demoPlaylist[4]?.artist, lastPlayed: '2天前' }
 ]);
 
 function getIndexById(songId) {
@@ -181,8 +214,49 @@ function openPlaylist(playlist) {
   alert(`打开歌单：${playlist.name}`);
 }
 
+function manageFavorites() {
+  alert('管理收藏歌曲');
+}
+
+function createNewPlaylist() {
+  const name = prompt('请输入歌单名称：');
+  if (name) {
+    myPlaylists.value.push({
+      id: Date.now().toString(),
+      name: name,
+      songCount: 0,
+      cover: 'https://neeko-copilot.bytedance.net/api/text_to_image?prompt=music%20playlist%20colorful%20abstract&image_size=square'
+    });
+  }
+}
+
 function toggleTheme() {
   toggleDarkMode();
+}
+
+function openAudioSettings() {
+  activeModal.value = 'audio';
+}
+
+function openLocalMusicSettings() {
+  activeModal.value = 'local';
+}
+
+function openAccountSettings() {
+  activeModal.value = 'account';
+}
+
+function openAboutSettings() {
+  activeModal.value = 'about';
+}
+
+function closeModal() {
+  activeModal.value = null;
+  // 刷新用户资料
+  const savedProfile = localStorage.getItem('userProfile');
+  if (savedProfile) {
+    userProfile.value = JSON.parse(savedProfile);
+  }
 }
 </script>
 
