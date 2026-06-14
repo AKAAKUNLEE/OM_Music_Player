@@ -232,10 +232,10 @@ export const demoPlaylist: Song[] = [
  }
 ];
 export const categories = [
- { id: 'recommend', name: '推荐', icon: '🔥' },
- { id: 'songlist', name: '歌单', icon: '📋' },
- { id: 'radio', name: '电台', icon: '📻' },
- { id: 'my', name: '我的', icon: '🎵' },
+ { id: 'recommend', name: '推荐', icon: 'disc' },
+ { id: 'songlist', name: '歌单', icon: 'playlist' },
+ { id: 'radio', name: '电台', icon: 'radio' },
+ { id: 'my', name: '我的', icon: 'user' },
 ];
 export const hotSearches = [
  '周杰伦', '林俊杰', 'Taylor Swift', '陈奕迅', '五月天', '王菲', '薛之谦', '邓紫棋'

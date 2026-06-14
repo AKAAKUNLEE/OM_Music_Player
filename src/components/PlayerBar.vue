@@ -8,7 +8,9 @@
           :alt="currentSong.name"
           class="cover"
         />
-        <div v-else class="cover placeholder">🎵</div>
+        <div v-else class="cover placeholder">
+          <Icon name="music" :size="24" color="#fff" />
+        </div>
       </div>
       <div class="song-info">
         <div class="song-name">{{ currentSong?.name || '暂无播放' }}</div>
@@ -27,20 +29,26 @@
       </div>
       <div class="control-buttons">
         <button class="btn-control" @click="toggleRepeat" :title="repeatTitle">
-          {{ repeatIcon }}
+          <Icon :name="repeatIcon" :size="16" />
         </button>
-        <button class="btn-control" @click="playPrev">⏮</button>
+        <button class="btn-control" @click="playPrev">
+          <Icon name="skip-prev" :size="16" />
+        </button>
         <button class="btn-play" @click="togglePlay">
-          {{ isPlaying ? '⏸' : '▶' }}
+          <Icon :name="isPlaying ? 'pause' : 'play'" :size="20" color="#fff" />
         </button>
-        <button class="btn-control" @click="playNext">⏭</button>
-        <button class="btn-control" @click="toggleLyrics" title="歌词">📝</button>
+        <button class="btn-control" @click="playNext">
+          <Icon name="skip-next" :size="16" />
+        </button>
+        <button class="btn-control" @click="toggleLyrics" title="歌词">
+          <Icon name="list" :size="16" />
+        </button>
       </div>
     </div>
 
     <div class="player-right">
       <button class="btn-control" @click="toggleMute">
-        {{ isMuted ? '🔇' : '🔊' }}
+        <Icon :name="isMuted ? 'volume-off' : 'volume'" :size="16" />
       </button>
       <div class="volume-bar-wrapper">
         <div class="volume-bar" @click="changeVolume">
@@ -49,7 +57,7 @@
         </div>
       </div>
       <button class="btn-control" @click="toggleDarkMode">
-        {{ isDarkMode ? '☀️' : '🌙' }}
+        <Icon :name="isDarkMode ? 'sunny' : 'moon'" :size="16" />
       </button>
     </div>
 
@@ -61,6 +69,7 @@
 import { ref, computed, watch, onMounted } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
 import { formatTime } from '../utils/format';
+import Icon from './Icon.vue';
 
 const {
   currentSong,
@@ -91,9 +100,9 @@ const progressPercent = computed(() => {
 
 const repeatIcon = computed(() => {
   switch (repeatMode.value) {
-    case 'single': return '🔂';
-    case 'random': return '🔀';
-    default: return '🔁';
+    case 'single': return 'repeat-single';
+    case 'random': return 'shuffle';
+    default: return 'repeat';
   }
 });
 

@@ -1,7 +1,9 @@
 <template>
   <div class="page my-page" :class="{ 'dark': isDarkMode }">
     <div class="user-header">
-      <div class="user-avatar">{{ userProfile.avatar }}</div>
+      <div class="user-avatar">
+        <Icon name="user" :size="40" />
+      </div>
       <div class="user-info">
         <h2 class="user-name">{{ userProfile.nickname }}</h2>
         <p class="user-desc">{{ userProfile.signature }}</p>
@@ -31,7 +33,9 @@
 
       <div class="section">
         <div class="section-header">
-          <h3 class="section-title">🎵 我的收藏</h3>
+          <h3 class="section-title">
+            <Icon name="heart" :size="18" /> 我的收藏
+          </h3>
           <button class="btn-manage" @click="manageFavorites">管理</button>
         </div>
         <div class="song-list">
@@ -51,7 +55,9 @@
             <div class="song-duration">{{ formatDuration(song.duration) }}</div>
           </div>
           <div v-if="playlist.length === 0" class="empty-state">
-            <div class="empty-icon">🎶</div>
+            <div class="empty-icon">
+              <Icon name="music" :size="48" color="#ccc" />
+            </div>
             <div class="empty-text">暂无收藏歌曲</div>
           </div>
         </div>
@@ -59,29 +65,35 @@
 
       <div class="section">
         <div class="section-header">
-          <h3 class="section-title">📋 创建的歌单</h3>
-          <button class="btn-create" @click="createNewPlaylist">+ 创建歌单</button>
+          <h3 class="section-title">
+            <Icon name="playlist" :size="18" /> 创建的歌单
+          </h3>
+          <button class="btn-create" @click="createNewPlaylist">
+            <Icon name="plus" :size="16" /> 创建歌单
+          </button>
         </div>
         <div class="playlist-list">
           <div 
-            v-for="playlist in myPlaylists" 
-            :key="playlist.id"
+            v-for="playlistItem in myPlaylists" 
+            :key="playlistItem.id"
             class="playlist-item"
-            @click="openPlaylist(playlist)"
+            @click="openPlaylist(playlistItem)"
           >
-            <img :src="playlist.cover" class="playlist-cover" />
+            <img :src="playlistItem.cover" class="playlist-cover" />
             <div class="playlist-info">
-              <div class="playlist-name">{{ playlist.name }}</div>
-              <div class="playlist-count">{{ playlist.songCount }} 首歌曲</div>
+              <div class="playlist-name">{{ playlistItem.name }}</div>
+              <div class="playlist-count">{{ playlistItem.songCount }} 首歌曲</div>
             </div>
-            <div class="playlist-arrow">→</div>
+            <Icon name="arrow-right" :size="16" class="playlist-arrow" />
           </div>
         </div>
       </div>
 
       <div class="section">
         <div class="section-header">
-          <h3 class="section-title">🎧 最近播放</h3>
+          <h3 class="section-title">
+            <Icon name="headphones" :size="18" /> 最近播放
+          </h3>
         </div>
         <div class="recent-list">
           <div 
@@ -102,33 +114,35 @@
 
       <div class="section settings-section">
         <div class="settings-header">
-          <h3 class="section-title">⚙️ 设置</h3>
+          <h3 class="section-title">
+            <Icon name="settings" :size="18" /> 设置
+          </h3>
         </div>
         <div class="settings-list">
           <div class="setting-item" @click="toggleTheme">
-            <span class="setting-icon">🎨</span>
+            <Icon name="palette" :size="18" class="setting-icon" />
             <span class="setting-name">主题模式</span>
             <span class="setting-value">{{ isDarkMode ? '深色' : '浅色' }}</span>
           </div>
           <div class="setting-item" @click="openAudioSettings">
-            <span class="setting-icon">🔊</span>
+            <Icon name="volume" :size="18" class="setting-icon" />
             <span class="setting-name">音效设置</span>
-            <span class="setting-arrow">→</span>
+            <Icon name="arrow-right" :size="14" class="setting-arrow" />
           </div>
           <div class="setting-item" @click="openLocalMusicSettings">
-            <span class="setting-icon">📁</span>
+            <Icon name="folder" :size="18" class="setting-icon" />
             <span class="setting-name">本地音乐</span>
-            <span class="setting-arrow">→</span>
+            <Icon name="arrow-right" :size="14" class="setting-arrow" />
           </div>
           <div class="setting-item" @click="openAccountSettings">
-            <span class="setting-icon">👤</span>
+            <Icon name="user" :size="18" class="setting-icon" />
             <span class="setting-name">账号管理</span>
-            <span class="setting-arrow">→</span>
+            <Icon name="arrow-right" :size="14" class="setting-arrow" />
           </div>
           <div class="setting-item" @click="openAboutSettings">
-            <span class="setting-icon">ℹ️</span>
+            <Icon name="info" :size="18" class="setting-icon" />
             <span class="setting-name">关于我们</span>
-            <span class="setting-arrow">→</span>
+            <Icon name="arrow-right" :size="14" class="setting-arrow" />
           </div>
         </div>
       </div>
@@ -154,6 +168,7 @@ import AudioSettings from '../components/AudioSettings.vue';
 import LocalMusicSettings from '../components/LocalMusicSettings.vue';
 import AccountSettings from '../components/AccountSettings.vue';
 import AboutSettings from '../components/AboutSettings.vue';
+import Icon from '../components/Icon.vue';
 
 const { playlist, currentIndex, isDarkMode, toggleDarkMode, playSong } = useMusicStore();
 
@@ -172,7 +187,7 @@ const modalTitle = computed(() => {
 // 加载用户资料
 const savedProfile = localStorage.getItem('userProfile');
 const userProfile = ref(savedProfile ? JSON.parse(savedProfile) : {
-  avatar: '👤',
+  avatar: 'user',
   nickname: 'OM Music 用户',
   signature: '音乐爱好者'
 });

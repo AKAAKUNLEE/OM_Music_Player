@@ -1,7 +1,7 @@
 <template>
   <div class="page radio-page" :class="{ 'dark': isDarkMode }">
     <div class="page-header">
-      <h2 class="page-title">📻 电台</h2>
+      <h2 class="page-title"><Icon name="radio" :size="28" /> 电台</h2>
       <p class="page-subtitle">探索各种类型的电台频道</p>
     </div>
 
@@ -15,7 +15,7 @@
             <h3 class="featured-title">{{ featuredRadio.name }}</h3>
             <p class="featured-desc">{{ featuredRadio.desc }}</p>
             <button class="btn-play-featured" @click="playRadio(featuredRadio)">
-              ▶ 立即收听
+              <Icon name="play" :size="16" color="#ff6b6b" /> 立即收听
             </button>
           </div>
         </div>
@@ -31,7 +31,7 @@
             :class="{ active: activeCategory === category.id }"
             @click="activeCategory = category.id"
           >
-            <span class="category-icon">{{ category.icon }}</span>
+            <Icon :name="category.icon" :size="20" class="category-icon" />
             <span class="category-name">{{ category.name }}</span>
           </div>
         </div>
@@ -49,14 +49,14 @@
             <div class="radio-cover">
               <img :src="radio.cover" :alt="radio.name" />
               <div class="radio-play">
-                <span>▶</span>
+                <Icon name="play" :size="18" color="#fff" />
               </div>
             </div>
             <div class="radio-info">
               <div class="radio-name">{{ radio.name }}</div>
               <div class="radio-desc">{{ radio.desc }}</div>
               <div class="radio-meta">
-                <span>🎧 {{ radio.listeners }} 人在听</span>
+                <span><Icon name="headphones" :size="12" /> {{ radio.listeners }} 人在听</span>
               </div>
             </div>
           </div>
@@ -69,6 +69,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
+import Icon from '../components/Icon.vue';
 
 const { isDarkMode } = useMusicStore();
 
@@ -83,14 +84,14 @@ const featuredRadio = ref({
 });
 
 const categories = ref([
-  { id: 'recommend', name: '推荐', icon: '🔥' },
-  { id: 'pop', name: '流行', icon: '🎶' },
-  { id: 'classical', name: '古典', icon: '🎻' },
-  { id: 'jazz', name: '爵士', icon: '🎷' },
-  { id: 'rock', name: '摇滚', icon: '🤘' },
-  { id: 'electronic', name: '电子', icon: '⚡' },
-  { id: 'folk', name: '民谣', icon: '🎸' },
-  { id: 'sleep', name: '助眠', icon: '🌙' }
+  { id: 'recommend', name: '推荐', icon: 'star' },
+  { id: 'pop', name: '流行', icon: 'music' },
+  { id: 'classical', name: '古典', icon: 'piano' },
+  { id: 'jazz', name: '爵士', icon: 'mic' },
+  { id: 'rock', name: '摇滚', icon: 'guitar' },
+  { id: 'electronic', name: '电子', icon: 'disc' },
+  { id: 'folk', name: '民谣', icon: 'headphones' },
+  { id: 'sleep', name: '助眠', icon: 'moon' }
 ]);
 
 const allRadios = ref([

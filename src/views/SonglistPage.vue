@@ -1,7 +1,7 @@
 <template>
   <div class="page songlist-page" :class="{ 'dark': isDarkMode }">
     <div class="page-header">
-      <h2 class="page-title">📋 歌单</h2>
+      <h2 class="page-title"><Icon name="playlist" :size="28" /> 歌单</h2>
       <p class="page-subtitle">探索精选歌单，发现更多好音乐</p>
     </div>
 
@@ -28,15 +28,15 @@
           <div class="card-cover">
             <img :src="playlist.cover" :alt="playlist.name" />
             <div class="card-overlay">
-              <div class="play-icon">▶</div>
+              <div class="play-icon"><Icon name="play" :size="20" color="#fff" /></div>
             </div>
           </div>
           <div class="card-content">
             <h3 class="card-title">{{ playlist.name }}</h3>
             <p class="card-desc">{{ playlist.desc }}</p>
             <div class="card-meta">
-              <span class="meta-item">🎵 {{ playlist.songCount }} 首</span>
-              <span class="meta-item">👥 {{ playlist.followers }} 人关注</span>
+              <span class="meta-item"><Icon name="music" :size="12" /> {{ playlist.songCount }} 首</span>
+              <span class="meta-item"><Icon name="user" :size="12" /> {{ playlist.followers }} 人关注</span>
             </div>
           </div>
         </div>
@@ -52,7 +52,7 @@
               <span>{{ selectedPlaylist.songCount }} 首歌曲</span>
               <span>{{ selectedPlaylist.followers }} 人关注</span>
             </div>
-            <button class="btn-play-all" @click="playAllSongs">▶ 播放全部</button>
+            <button class="btn-play-all" @click="playAllSongs"><Icon name="play" :size="16" color="#fff" /> 播放全部</button>
           </div>
         </div>
         <div class="detail-songs">
@@ -100,6 +100,7 @@ import { ref, computed } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
 import { demoPlaylist } from '../utils/demoData';
 import { formatDuration } from '../utils/format';
+import Icon from '../components/Icon.vue';
 
 const { playlist, currentIndex, isDarkMode, addSongs, playSong } = useMusicStore();
 

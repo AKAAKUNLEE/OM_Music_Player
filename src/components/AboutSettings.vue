@@ -1,44 +1,50 @@
 <template>
   <div class="about-settings">
     <div class="app-info">
-      <div class="app-logo">🎵</div>
+      <div class="app-logo">
+        <Icon name="music" :size="40" color="#fff" />
+      </div>
       <h2 class="app-name">OM Music Player</h2>
       <p class="app-version">版本 1.0.0</p>
       <p class="app-desc">一款简洁优雅的本地音乐播放器</p>
     </div>
 
     <div class="info-section">
-      <h3 class="section-title">✨ 功能特性</h3>
+      <h3 class="section-title">
+        <Icon name="star" :size="16" /> 功能特性
+      </h3>
       <div class="feature-list">
         <div class="feature-item">
-          <span class="feature-icon">🎵</span>
+          <Icon name="music" :size="18" class="feature-icon" />
           <span class="feature-text">支持多种音频格式（MP3、FLAC、WAV等）</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🎨</span>
+          <Icon name="palette" :size="18" class="feature-icon" />
           <span class="feature-text">深色/浅色主题切换</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">📝</span>
+          <Icon name="list" :size="18" class="feature-icon" />
           <span class="feature-text">歌词同步显示</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">📊</span>
+          <Icon name="bar-chart" :size="18" class="feature-icon" />
           <span class="feature-text">音效均衡器调节</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">📁</span>
+          <Icon name="folder" :size="18" class="feature-icon" />
           <span class="feature-text">本地音乐文件管理</span>
         </div>
         <div class="feature-item">
-          <span class="feature-icon">🎧</span>
+          <Icon name="headphones" :size="18" class="feature-icon" />
           <span class="feature-text">播放列表管理</span>
         </div>
       </div>
     </div>
 
     <div class="info-section">
-      <h3 class="section-title">💻 技术栈</h3>
+      <h3 class="section-title">
+        <Icon name="code" :size="16" /> 技术栈
+      </h3>
       <div class="tech-tags">
         <span class="tech-tag">Vue 3</span>
         <span class="tech-tag">Tauri 2</span>
@@ -48,47 +54,51 @@
     </div>
 
     <div class="info-section">
-      <h3 class="section-title">📞 联系我们</h3>
+      <h3 class="section-title">
+        <Icon name="phone" :size="16" /> 联系我们
+      </h3>
       <div class="contact-list">
         <div class="contact-item" @click="openLink('github')">
-          <span class="contact-icon">📦</span>
+          <Icon name="package" :size="18" class="contact-icon" />
           <span class="contact-name">GitHub</span>
-          <span class="contact-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="contact-arrow" />
         </div>
         <div class="contact-item" @click="openLink('feedback')">
-          <span class="contact-icon">💬</span>
+          <Icon name="message" :size="18" class="contact-icon" />
           <span class="contact-name">问题反馈</span>
-          <span class="contact-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="contact-arrow" />
         </div>
         <div class="contact-item" @click="openLink('website')">
-          <span class="contact-icon">🌐</span>
+          <Icon name="globe" :size="18" class="contact-icon" />
           <span class="contact-name">官方网站</span>
-          <span class="contact-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="contact-arrow" />
         </div>
       </div>
     </div>
 
     <div class="info-section">
-      <h3 class="section-title">📜 法律信息</h3>
+      <h3 class="section-title">
+        <Icon name="file" :size="16" /> 法律信息
+      </h3>
       <div class="legal-list">
         <div class="legal-item" @click="showTerms = true">
           <span class="legal-name">用户协议</span>
-          <span class="legal-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="legal-arrow" />
         </div>
         <div class="legal-item" @click="showPrivacyPolicy = true">
           <span class="legal-name">隐私政策</span>
-          <span class="legal-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="legal-arrow" />
         </div>
         <div class="legal-item" @click="showLicense = true">
           <span class="legal-name">开源许可证</span>
-          <span class="legal-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="legal-arrow" />
         </div>
       </div>
     </div>
 
     <div class="copyright">
       <p class="copyright-text">© 2024 OM Music Player</p>
-      <p class="copyright-text">Made with ❤️ for music lovers</p>
+      <p class="copyright-text">Made with <Icon name="heart" :size="12" color="#ff6b6b" /> for music lovers</p>
     </div>
 
     <!-- 用户协议弹窗 -->
@@ -145,6 +155,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['close']);
 const { isDarkMode } = useMusicStore();

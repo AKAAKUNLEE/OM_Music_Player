@@ -1,13 +1,13 @@
 <template>
   <div class="lyrics-panel" :class="{ 'dark': isDarkMode }" v-if="showLyrics">
     <div class="lyrics-header">
-      <h3 class="lyrics-title">🎵 歌词</h3>
-      <button class="btn-close" @click="toggleLyrics">✕</button>
+      <h3 class="lyrics-title"><Icon name="music" :size="18" /> 歌词</h3>
+      <button class="btn-close" @click="toggleLyrics"><Icon name="close" :size="14" /></button>
     </div>
     
     <div class="lyrics-content" ref="lyricsContainer">
       <div v-if="parsedLyrics.length === 0" class="no-lyrics">
-        <div class="no-lyrics-icon">📝</div>
+        <div class="no-lyrics-icon"><Icon name="list" :size="48" color="#ccc" /></div>
         <div class="no-lyrics-text">暂无歌词</div>
       </div>
       <div v-else>
@@ -28,6 +28,7 @@
 import { ref, computed, watch, nextTick } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
 import { parseLyrics } from '../utils/format';
+import Icon from './Icon.vue';
 
 const { currentSong, currentTime, showLyrics, toggleLyrics, isDarkMode } = useMusicStore();
 

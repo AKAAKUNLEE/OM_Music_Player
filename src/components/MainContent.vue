@@ -2,7 +2,7 @@
   <div class="main-content" :class="{ 'dark': isDarkMode }">
     <div class="search-section">
       <div class="search-box">
-        <span class="search-icon">🔍</span>
+        <Icon name="search" :size="16" class="search-icon" />
         <input 
           type="text" 
           v-model="searchQuery"
@@ -11,7 +11,7 @@
           @focus="showHotSearches = true"
           @input="handleSearch"
         />
-        <button v-if="searchQuery" class="btn-clear" @click="clearSearch">✕</button>
+        <button v-if="searchQuery" class="btn-clear" @click="clearSearch"><Icon name="close" :size="12" /></button>
       </div>
       <div v-if="showHotSearches" class="hot-searches" @click.self="showHotSearches = false">
         <div class="hot-title">热门搜索</div>
@@ -32,7 +32,7 @@
       <div class="banner-section">
         <div class="banner">
           <div class="banner-content">
-            <h2 class="banner-title">🎶 OM Music Player</h2>
+            <h2 class="banner-title"><Icon name="disc" :size="28" color="#fff" /> OM Music Player</h2>
             <p class="banner-subtitle">发现音乐的无限可能</p>
           </div>
           <div class="banner-decoration">
@@ -46,7 +46,7 @@
       <div class="recommend-section">
         <div class="section-header">
           <h3 class="section-title">推荐歌单</h3>
-          <button class="btn-more">查看全部 →</button>
+          <button class="btn-more">查看全部 <Icon name="arrow-right" :size="14" /></button>
         </div>
         <div class="playlist-grid">
           <div 
@@ -57,7 +57,7 @@
           >
             <div class="card-cover">
               <img :src="item.cover" :alt="item.name" />
-              <div class="card-play">▶</div>
+              <div class="card-play"><Icon name="play" :size="14" color="#fff" /></div>
             </div>
             <div class="card-info">
               <div class="card-name">{{ item.name }}</div>
@@ -116,6 +116,7 @@ import { ref, computed, onMounted } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
 import { demoPlaylist, hotSearches } from '../utils/demoData';
 import { formatDuration } from '../utils/format';
+import Icon from './Icon.vue';
 
 const { playlist, currentIndex, isDarkMode, addSongs, playSong } = useMusicStore();
 

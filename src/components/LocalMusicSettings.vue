@@ -2,7 +2,7 @@
   <div class="local-music-settings">
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">📁</span>
+        <Icon name="folder" :size="18" class="label-icon" />
         <span class="label-text">音乐文件夹</span>
       </div>
       <div class="folder-list">
@@ -11,23 +11,25 @@
           :key="index"
           class="folder-item"
         >
-          <span class="folder-icon">📂</span>
+          <Icon name="folder-open" :size="16" class="folder-icon" />
           <span class="folder-path">{{ folder }}</span>
-          <button class="btn-remove" @click="removeFolder(index)">✕</button>
+          <button class="btn-remove" @click="removeFolder(index)">
+            <Icon name="close" :size="12" />
+          </button>
         </div>
         <div v-if="musicFolders.length === 0" class="empty-folders">
           <span class="empty-text">暂无添加的音乐文件夹</span>
         </div>
       </div>
       <button class="btn-add-folder" @click="addFolder">
-        <span class="add-icon">+</span>
+        <Icon name="plus" :size="18" class="add-icon" />
         <span>添加音乐文件夹</span>
       </button>
     </div>
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🔍</span>
+        <Icon name="search" :size="18" class="label-icon" />
         <span class="label-text">扫描设置</span>
       </div>
       <div class="scan-options">
@@ -55,7 +57,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">📄</span>
+        <Icon name="file" :size="18" class="label-icon" />
         <span class="label-text">支持的格式</span>
       </div>
       <div class="format-list">
@@ -73,7 +75,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">📊</span>
+        <Icon name="bar-chart" :size="18" class="label-icon" />
         <span class="label-text">本地音乐统计</span>
       </div>
       <div class="stats-grid">
@@ -109,6 +111,7 @@
 <script setup>
 import { ref } from 'vue';
 import { open } from '@tauri-apps/plugin-dialog';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['close']);
 

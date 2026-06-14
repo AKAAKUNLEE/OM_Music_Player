@@ -1,7 +1,9 @@
 <template>
   <div class="sidebar" :class="{ 'dark': isDarkMode }">
     <div class="logo-section">
-      <div class="logo">🎵</div>
+      <div class="logo">
+        <Icon name="music" :size="24" color="#fff" />
+      </div>
       <div class="logo-text">OM Music</div>
     </div>
 
@@ -14,7 +16,7 @@
           :class="{ active: activeNav === item.id }"
           @click="handleNavClick(item.id)"
         >
-          <span class="nav-icon">{{ item.icon }}</span>
+          <Icon :name="item.icon" :size="18" />
           <span class="nav-name">{{ item.name }}</span>
         </li>
       </ul>
@@ -23,7 +25,9 @@
     <div class="playlist-section">
       <div class="section-header">
         <h3 class="section-title">播放列表</h3>
-        <button class="btn-add" @click="selectMusicFiles">+</button>
+        <button class="btn-add" @click="selectMusicFiles">
+          <Icon name="plus" :size="16" color="#fff" />
+        </button>
       </div>
       <div class="playlist-list" ref="playlistContainer">
         <div 
@@ -38,10 +42,14 @@
             <div class="item-name">{{ song.name }}</div>
             <div class="item-artist">{{ song.artist }}</div>
           </div>
-          <button class="btn-delete" @click.stop="removeSong(index)">✕</button>
+          <button class="btn-delete" @click.stop="removeSong(index)">
+            <Icon name="close" :size="12" />
+          </button>
         </div>
         <div v-if="playlist.length === 0" class="empty-playlist">
-          <div class="empty-icon">🎶</div>
+          <div class="empty-icon">
+            <Icon name="music" :size="48" color="#ccc" />
+          </div>
           <div class="empty-text">暂无音乐</div>
           <div class="empty-hint">点击上方 + 添加本地音乐</div>
         </div>
@@ -60,6 +68,7 @@ import { useMusicStore } from '../stores/musicStore';
 import { categories } from '../utils/demoData';
 import { open } from '@tauri-apps/plugin-dialog';
 import { convertFileSrc } from '@tauri-apps/api/core';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['navigate']);
 

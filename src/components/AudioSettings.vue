@@ -2,7 +2,7 @@
   <div class="audio-settings">
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🔊</span>
+        <Icon name="volume" :size="18" class="label-icon" />
         <span class="label-text">主音量</span>
       </div>
       <div class="setting-control">
@@ -19,7 +19,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🎵</span>
+        <Icon name="music" :size="18" class="label-icon" />
         <span class="label-text">均衡器</span>
       </div>
       <div class="equalizer-presets">
@@ -50,7 +50,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🎧</span>
+        <Icon name="headphones" :size="18" class="label-icon" />
         <span class="label-text">音效增强</span>
       </div>
       <div class="toggle-options">
@@ -89,7 +89,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">⏱️</span>
+        <Icon name="clock" :size="18" class="label-icon" />
         <span class="label-text">淡入淡出</span>
       </div>
       <div class="fade-control">
@@ -126,6 +126,7 @@
 <script setup>
 import { ref, watch } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['close']);
 const { volume } = useMusicStore();

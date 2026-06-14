@@ -3,7 +3,7 @@
     <div class="modal-container" :class="{ 'dark': isDarkMode }">
       <div class="modal-header">
         <h3 class="modal-title">{{ title }}</h3>
-        <button class="btn-close" @click="close">✕</button>
+        <button class="btn-close" @click="close"><Icon name="close" :size="16" /></button>
       </div>
       <div class="modal-content">
         <slot></slot>
@@ -14,6 +14,7 @@
 
 <script setup>
 import { useMusicStore } from '../stores/musicStore';
+import Icon from './Icon.vue';
 
 const props = defineProps({
   title: {

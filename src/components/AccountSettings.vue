@@ -2,7 +2,9 @@
   <div class="account-settings">
     <div class="profile-section">
       <div class="avatar-wrapper">
-        <div class="avatar">{{ userProfile.avatar }}</div>
+        <div class="avatar">
+          <Icon name="user" :size="40" />
+        </div>
         <button class="btn-change-avatar" @click="changeAvatar">更换头像</button>
       </div>
       <div class="profile-info">
@@ -31,30 +33,30 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🔐</span>
+        <Icon name="shield" :size="18" class="label-icon" />
         <span class="label-text">账号安全</span>
       </div>
       <div class="security-options">
         <div class="security-item" @click="showPasswordModal = true">
           <span class="security-name">修改密码</span>
-          <span class="security-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="security-arrow" />
         </div>
         <div class="security-item" @click="showBindModal = true">
           <span class="security-name">绑定邮箱</span>
           <span class="security-status">{{ userProfile.email || '未绑定' }}</span>
-          <span class="security-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="security-arrow" />
         </div>
         <div class="security-item" @click="showPhoneModal = true">
           <span class="security-name">绑定手机</span>
           <span class="security-status">{{ userProfile.phone || '未绑定' }}</span>
-          <span class="security-arrow">→</span>
+          <Icon name="arrow-right" :size="14" class="security-arrow" />
         </div>
       </div>
     </div>
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🔔</span>
+        <Icon name="bell" :size="18" class="label-icon" />
         <span class="label-text">通知设置</span>
       </div>
       <div class="toggle-options">
@@ -93,7 +95,7 @@
 
     <div class="setting-group">
       <div class="setting-label">
-        <span class="label-icon">🔒</span>
+        <Icon name="lock" :size="18" class="label-icon" />
         <span class="label-text">隐私设置</span>
       </div>
       <div class="toggle-options">
@@ -122,7 +124,7 @@
 
     <div class="danger-zone">
       <div class="danger-header">
-        <span class="danger-icon">⚠️</span>
+        <Icon name="warning" :size="18" class="danger-icon" />
         <span class="danger-text">危险操作</span>
       </div>
       <div class="danger-actions">
@@ -208,12 +210,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useMusicStore } from '../stores/musicStore';
+import Icon from './Icon.vue';
 
 const emit = defineEmits(['close']);
 const { isDarkMode } = useMusicStore();
 
 const userProfile = ref({
-  avatar: '👤',
   nickname: 'OM Music 用户',
   signature: '音乐爱好者',
   email: '',
@@ -270,9 +272,9 @@ if (savedPrivacy) {
 
 function changeAvatar() {
   // 模拟更换头像
-  const avatars = ['👤', '😊', '😎', '🤓', '🎭', '🎵', '🎶', '🎸', '🎹', '🎤'];
-  const randomIndex = Math.floor(Math.random() * avatars.length);
-  userProfile.value.avatar = avatars[randomIndex];
+  const avatarIcons = ['user', 'music', 'headphones', 'mic', 'guitar', 'piano', 'disc', 'radio', 'heart', 'settings'];
+  const randomIndex = Math.floor(Math.random() * avatarIcons.length);
+  userProfile.value.avatar = avatarIcons[randomIndex];
 }
 
 function changePassword() {
@@ -325,7 +327,7 @@ function bindPhone() {
 
 function resetProfile() {
   userProfile.value = {
-    avatar: '👤',
+    avatar: 'user',
     nickname: 'OM Music 用户',
     signature: '音乐爱好者',
     email: '',
